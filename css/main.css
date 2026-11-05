@@ -1,0 +1,1317 @@
+
+/* =============================================
+   RESET BÁSICO
+   (colocar SIEMPRE al principio de main.css)
+============================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* =============================================
+   FUENTES DE MARCA
+   (si ya las tienes declaradas en main.css, borra este bloque)
+============================================= */
+@font-face {
+    font-family: "Optima";
+    src: url("../assets/fonts/Optima-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url("../assets/fonts/Silka-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* =============================================
+   UTILIDAD ACCESIBILIDAD
+============================================= */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* =============================================
+   LANDING — LA FÓRMULA DEL SABER
+============================================= */
+body.landing {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: #302e2b;
+}
+
+body.landing {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Silka", sans-serif;
+}
+
+.landing__bg {
+    position: fixed;
+    inset: 0;
+    background-image: url("../assets/images/fondo-landing.png");
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.landing__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(48,46,43,.35) 0%, rgba(48,46,43,.15) 30%, rgba(48,46,43,.15) 70%, rgba(48,46,43,.35) 100%);
+}
+
+/* Texto de márgenes: se recorta parcialmente contra el borde de la ventana */
+.landing__text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    font-family: "Optima", serif;
+    font-weight: 400;
+    font-size: clamp(3.5rem, min(13vw, 16vh), 10rem);
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    line-height: 1;
+    z-index: 1;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.landing__text--top {
+    top: -3vw;
+    opacity: 0;
+    animation: dropIn 1.1s cubic-bezier(.22, 1, .36, 1) 0.1s forwards;
+}
+
+.landing__text--bottom {
+    bottom: -3vw;
+    opacity: 0;
+    animation: riseIn 1.1s cubic-bezier(.22, 1, .36, 1) 0.1s forwards;
+}
+
+@keyframes dropIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-60%); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes riseIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(60%); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Bloque central: logo + marca + CTA — estático, sin animación */
+.landing__center {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.landing__logo {
+    width: clamp(74px, 8vw, 96px);
+    height: auto;
+}
+
+.landing__brand {
+    margin: 0.3rem;
+    font-family: "Optima", serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    color: #ffffff;
+}
+
+.landing__cta {
+    margin-top: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Silka", sans-serif;
+    font-size: 1.3rem;
+    color: #ffffff;
+    text-decoration: none;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.landing__cta-arrow {
+    font-family: "Silka", sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+.landing__cta:hover,
+.landing__cta:focus-visible {
+    transform: scale(1.08);
+}
+
+.landing__cta:focus-visible {
+    outline: 2px solid #ec6b00;
+    outline-offset: 6px;
+}
+
+/* Respeta preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    .landing__text--top,
+    .landing__text--bottom,
+    .landing__cta {
+        animation: none;
+        opacity: 1;
+        transform: translateX(-50%);
+    }
+    .landing__cta {
+        transform: none;
+    }
+    .landing__cta:hover,
+    .landing__cta:focus-visible {
+        transform: none;
+    }
+}
+
+/* Móvil: marca más grande, botón más pequeño, y usamos altura de
+   viewport dinámica (dvh) para que "DEL SABER" no quede fuera del
+   área realmente visible en navegadores móviles */
+@media (max-width: 600px) {
+    body.landing {
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
+        height: auto;
+        min-height: 100vh;
+        min-height: 100svh;
+        overflow-y: auto;
+    }
+
+    .landing__text {
+        font-size: clamp(2.2rem, 14vw, 3.6rem);
+    }
+
+    .landing__text--top {
+        top: -3vw;
+    }
+
+    .landing__center {
+        grid-row: 2;
+    }
+
+    .landing__text--bottom {
+        grid-row: 3;
+        align-self: end;
+        position: static;
+        animation: none;
+        opacity: 1;
+        transform: none;
+        padding-bottom: 1.5rem;
+    }
+
+    .landing__brand {
+        font-size: 2.1rem;
+    }
+
+    .landing__center {
+        gap: 0.75rem;
+    }
+
+    .landing__logo {
+        width: 65px;
+    }
+
+    .landing__cta {
+        margin-top: 1.25rem;
+        font-size: 1rem;
+    }
+}
+
+/* =============================================
+   QUIZ — LAYOUT COMPARTIDO (test-1.html … test-5.html)
+============================================= */
+
+body.quiz {
+    height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100vh;
+    font-family: "Silka", sans-serif;
+    color: #302e2b;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+/* Paleta por pregunta — cada test-N.html solo cambia esta variable
+   añadiendo su propio modificador de body (quiz--q1, quiz--q2...) */
+body.quiz--q1 {
+    --accent: #ff6b00;
+    --accent-text: #302e2b;
+}
+
+body.quiz--q2 {
+    --accent: #ff6b00;
+    --accent-text: #302e2b;
+}
+
+body.quiz--q3 {
+    --accent: #ff6b00;
+    --accent-text: #302e2b;
+}
+
+body.quiz--q4 {
+    --accent: #ff6b00;
+    --accent-text: #302e2b;
+}
+
+body.quiz--q6 {
+    --accent: #ff6b00;
+    --accent-text: #302e2b;
+}
+
+body.quiz--q5 {
+    --accent: #ff6b00;
+    --accent-text: #302e2b;
+}
+
+/* =============================================
+   VARIANTE — Pregunta a pantalla completa con
+   respuestas en imagen (test-3.html)
+============================================= */
+body.quiz--full {
+    grid-template-columns: 1fr;
+    background: #302e2b;
+    color: #ffffff;
+}
+
+body.quiz--full .quiz__restart {
+    color: #ffffff;
+}
+
+.quiz__panel--full {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 2rem;
+    padding: 6.5rem 4rem 3.5rem;
+    height: 100vh;
+    min-height: 0;
+}
+
+.quiz__full-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    width: 100%;
+    max-width: 68rem;
+    margin: 0 auto;
+    min-height: 0;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.quiz__question--center {
+    max-width: 62rem;
+    margin: 0 auto;
+    color: #ffffff;
+    text-align: center;
+}
+
+.quiz__image-options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    width: 100%;
+}
+
+.quiz__image-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.quiz__image-option img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.quiz__image-option:hover img {
+    border-color: var(--accent, #ff6b00);
+}
+
+.quiz__image-option.is-selected img {
+    border-color: var(--accent, #ff6b00);
+    transform: scale(1.03);
+}
+
+.quiz__image-option-label {
+    font-family: "Optima", serif;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #ffffff;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.quiz__image-option.is-selected .quiz__image-option-label {
+    color: var(--accent, #ff6b00);
+    font-weight: 700;
+}
+
+/* =============================================
+   Volver a empezar
+============================================= */
+.quiz__restart {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    color: #302e2b;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.quiz__restart:hover {
+    opacity: 0.6;
+}
+
+.quiz__restart-arrow {
+    font-size: 1.2rem;
+}
+
+/* =============================================
+   Panel izquierdo — pregunta y opciones
+============================================= */
+.quiz__panel--question {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 2rem;
+    padding: 9.5rem 4rem 3.5rem;
+    height: 100vh;
+    min-height: 0;
+}
+
+.quiz__content {
+    max-width: 45rem;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.quiz__question {
+    margin: 0 0 2.5rem;
+    font-family: "Optima", serif;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1.35;
+    color: var(--accent, #ff6b00);
+}
+
+.quiz__options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.quiz__option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: "Silka", sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    color: #302e2b;
+    text-align: left;
+    cursor: pointer;
+}
+
+.quiz__option-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-top: 0.25rem;
+    border-radius: 50%;
+    border: 1px solid #302e2b;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.quiz__option-text {
+    padding-top: 0.15rem;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.quiz__option:hover .quiz__option-icon {
+    border-color: var(--accent, #ff6b00);
+    color: var(--accent, #ff6b00);
+}
+
+.quiz__option.is-selected .quiz__option-icon {
+    background: var(--accent, #ff6b00);
+    border-color: var(--accent, #ff6b00);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.quiz__option.is-selected .quiz__option-text {
+    color: var(--accent, #ff6b00);
+    font-weight: 700;
+}
+
+/* =============================================
+   Botón Siguiente — bloqueado hasta seleccionar respuesta
+============================================= */
+.quiz__next {
+    justify-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Silka", sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: normal;
+    color: var(--accent, #ff6b00);
+    text-decoration: none;
+    opacity: 0.35;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.25s ease;
+}
+
+.quiz__next.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.quiz__next.is-active:hover,
+.quiz__next.is-active:focus-visible {
+    transform: scale(1.06);
+}
+
+.quiz__next:focus-visible {
+    outline: 2px solid var(--accent, #ff6b00);
+    outline-offset: 6px;
+}
+
+.quiz__next-arrow {
+    font-size: 1rem;
+}
+
+/* =============================================
+   Panel derecho — imagen y texto de producto
+============================================= */
+.quiz__panel--visual {
+    position: relative;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--accent, #ff6b00);
+}
+
+.quiz__visual-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* La animación de entrada del panel visual se ha retirado:
+   ahora la imagen ya trae el texto integrado y ocupa el panel completo. */
+
+/* =============================================
+   Responsive: apilar paneles en móvil
+============================================= */
+@media (max-width: 900px) {
+    body.quiz {
+        height: auto;
+        overflow: visible;
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+    }
+
+    .quiz__panel--visual {
+        height: 45vh;
+        order: -1;
+    }
+
+    .quiz__panel--question {
+        height: auto;
+        padding: 2rem 1.75rem 2.5rem;
+    }
+
+    .quiz__content {
+        overflow-y: visible;
+    }
+
+    .quiz__question {
+        font-size: 1.4rem;
+    }
+
+    .quiz__restart {
+        top: 1.25rem;
+        left: 1.25rem;
+    }
+
+    .quiz__panel--full {
+        height: auto;
+        padding: 5.5rem 1.75rem 2.5rem;
+    }
+
+    .quiz__full-inner {
+        overflow-y: visible;
+        gap: 2rem;
+    }
+
+    .quiz__image-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .quiz__image-option-label {
+        font-size: 0.85rem;
+    }
+}
+
+/* =============================================
+   RESULTADOS — z-final.html
+============================================= */
+
+html:has(body.results) {
+    scroll-behavior: smooth;
+}
+
+body.results {
+    margin: 0;
+    background: #ffffff;
+    color: #302e2b;
+    font-family: "Silka", sans-serif;
+}
+
+/* ---------- Hero: cabecera con resumen ---------- */
+.results__hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 4rem 4rem 5rem;
+}
+
+.results__hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("../assets/images/fondo-final.png");
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.results__hero-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(48, 46, 43, 0.55);
+}
+
+.results__margin-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    font-family: "Optima", serif;
+    font-weight: 400;
+    font-size: clamp(3.5rem, min(13vw, 16vh), 10rem);
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    line-height: 1;
+    z-index: 1;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.results__margin-text--top {
+    top: -6vw;
+}
+
+.results__margin-text--bottom {
+    bottom: -6vw;
+}
+
+.results__side-label {
+    position: absolute;
+    top: 50%;
+    writing-mode: vertical-rl;
+    white-space: nowrap;
+    font-family: "Optima", serif;
+    font-size: 2.3rem;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+    z-index: 1;
+    margin: 0;
+}
+
+.results__side-label--left {
+    left: 5rem;
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.results__side-label--right {
+    right: 5rem;
+    transform: translateY(-50%);
+}
+
+/* ---------- Resumen de 3 columnas ---------- */
+.results__summary {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 4rem;
+    max-width: 90rem;
+    width: 100%;
+    padding: 2.5rem 2rem;
+}
+
+.results__title {
+    margin: 0 auto;
+    max-width: 20rem;
+    font-family: "Optima", serif;
+    font-size: 2.2rem;
+    letter-spacing: normal;
+    line-height: 1.3;
+    color: #ffffff;
+    text-align: center;
+}
+
+.results__score {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    text-align: center;
+}
+
+.results__score-lead,
+.results__score-sub {
+    margin: 0;
+    font-family: "Optima", serif;
+    font-size: 2.1rem;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+
+.results__score-number {
+    margin: 0.2rem 0;
+    font-family: "Optima", serif;
+    font-size: clamp(6rem, 12vw, 9rem);
+    letter-spacing: normal;
+    line-height: 1;
+    color: #ffffff;
+}
+
+.results__see-answers {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-family: "Silka", sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.results__see-answers:hover,
+.results__see-answers:focus-visible {
+    opacity: 0.7;
+    transform: translateX(-50%) translateY(2px);
+}
+
+.results__message {
+    margin: 0 auto;
+    max-width: 20rem;
+    font-family: "Optima", serif;
+    font-size: 1.5rem;
+    letter-spacing: normal;
+    line-height: 1.5;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* ---------- Detalle de preguntas ---------- */
+.results__detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem 4rem;
+    max-width: 90rem;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+}
+
+.results__question-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.results__question {
+    margin: 0;
+    font-family: "Optima", serif;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1.35;
+    color: var(--accent, #ff6b00);
+}
+
+.results__options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.results__option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: "Silka", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: #302e2b;
+    text-align: left;
+    cursor: default;
+}
+
+.results__option-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-top: 0.2rem;
+    border-radius: 50%;
+    border: 1px solid #302e2b;
+    font-size: 1rem;
+    color: #302e2b;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.results__option-text {
+    padding-top: 0.1rem;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+/* Respuesta correcta: siempre en verde, la haya marcado el usuario o no */
+.results__option.is-correct .results__option-icon {
+    background: #2e7d4f;
+    border-color: #2e7d4f;
+    color: #ffffff;
+}
+
+.results__option.is-correct .results__option-text {
+    color: #2e7d4f;
+    font-weight: 700;
+}
+
+/* Respuesta marcada por el usuario, pero incorrecta */
+.results__option.is-wrong .results__option-icon {
+    background: #c73f3f;
+    border-color: #c73f3f;
+    color: #ffffff;
+}
+
+.results__option.is-wrong .results__option-text {
+    color: #c73f3f;
+    font-weight: 700;
+    text-decoration: line-through;
+}
+
+/* ---------- Hacer de nuevo ---------- */
+.results__again-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 2rem 5rem;
+}
+
+.results__again {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Silka", sans-serif;
+    font-size: 1.4rem;
+    color: #ff6b00;
+    text-decoration: none;
+    transition: transform 0.25s ease;
+}
+
+.results__again:hover,
+.results__again:focus-visible {
+    transform: scale(1.06);
+}
+
+.results__again:focus-visible {
+    outline: 2px solid #ff6b00;
+    outline-offset: 6px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .results__hero {
+        padding: 3rem 1.75rem 4rem;
+    }
+
+    .results__summary {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 0.75rem;
+    }
+
+    /* "Desenvuelve" el bloque de puntuación para poder reordenar
+       sus elementos junto con el título y el mensaje */
+    .results__score {
+        display: contents;
+    }
+
+    .results__title {
+        order: 1;
+        max-width: none;
+        font-size: 1.4rem;
+    }
+
+    .results__score-lead {
+        order: 2;
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+    }
+
+    .results__score-number {
+        order: 3;
+        font-size: clamp(3rem, 16vw, 4rem);
+        margin: 0;
+    }
+
+    .results__score-sub {
+        order: 4;
+        font-size: 1.1rem;
+    }
+
+    .results__message {
+        order: 5;
+        max-width: none;
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+    }
+
+    .results__see-answers {
+        position: static;
+        top: auto;
+        left: auto;
+        transform: none;
+        order: 6;
+        justify-self: center;
+        margin-top: 1.5rem;
+    }
+
+    .results__see-answers:hover,
+    .results__see-answers:focus-visible {
+        transform: translateY(2px);
+    }
+
+    .results__title,
+    .results__message {
+        text-align: center;
+    }
+
+    .results__side-label {
+        display: none;
+    }
+
+    .results__detail {
+        grid-template-columns: 1fr;
+        padding: 3rem 1.75rem;
+        gap: 3rem;
+    }
+}
+
+/* =============================================
+   CUESTIONARIO DE SATISFACCIÓN — añadidos
+   (escala 1-10, lista compacta, campos de texto,
+   landing con subtítulo y página de gracias)
+============================================= */
+
+/* Landing: línea informativa bajo la marca */
+.landing__note {
+    margin: 0;
+    font-family: "Silka", sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+    .landing__note { font-size: 0.9rem; }
+}
+
+/* Indicador "1 / 5" sobre la pregunta */
+.quiz__kicker {
+    margin: 0 0 1rem;
+    font-family: "Silka", sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #302e2b;
+    opacity: 0.6;
+}
+
+/* Escala 1-10: dos filas de 5 círculos */
+.quiz__scale {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 0.5rem;
+    max-width: 38rem;
+}
+
+.quiz__scale-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 3.4rem;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    background: none;
+    border: 1px solid #302e2b;
+    border-radius: 50%;
+    font-family: "Optima", serif;
+    font-size: 1.25rem;
+    color: #302e2b;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.quiz__scale-btn:hover,
+.quiz__scale-btn:focus-visible {
+    border-color: var(--accent, #ff6b00);
+    color: var(--accent, #ff6b00);
+}
+
+.quiz__scale-btn.is-selected {
+    background: var(--accent, #ff6b00);
+    border-color: var(--accent, #ff6b00);
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+.quiz__scale-legend {
+    display: flex;
+    justify-content: space-between;
+    max-width: 38rem;
+    margin: 1.25rem 0 0;
+    font-size: 0.95rem;
+    color: #302e2b;
+    opacity: 0.65;
+}
+
+/* Lista de productos (más larga): menos espacio entre opciones */
+.quiz__options--compact {
+    gap: 0.85rem;
+}
+
+.quiz__options--compact .quiz__option {
+    font-size: 1.12rem;
+}
+
+/* Campos de texto */
+.quiz__input,
+.quiz__textarea {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #302e2b;
+    border-radius: 0;
+    padding: 0.5rem 0;
+    font-family: "Silka", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #302e2b;
+    resize: none;
+}
+
+.quiz__input {
+    margin: 0.6rem 0 0.2rem 2.5rem;
+    width: calc(100% - 2.5rem);
+}
+
+.quiz__input[hidden] {
+    display: none;
+}
+
+.quiz__textarea {
+    font-size: 1.3rem;
+}
+
+.quiz__input::placeholder,
+.quiz__textarea::placeholder {
+    color: #302e2b;
+    opacity: 0.45;
+}
+
+.quiz__input:focus,
+.quiz__textarea:focus {
+    outline: none;
+    border-bottom-color: var(--accent, #ff6b00);
+}
+
+/* Imagen que aún no se ha subido: se oculta y queda el panel naranja */
+.quiz__visual-image[hidden] {
+    display: none;
+}
+
+/* Página de gracias (gracias.html) */
+.thanks__summary {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 100%;
+    max-width: 38rem;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.thanks__title {
+    margin: 0 0 1.5rem;
+    font-family: "Optima", serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.thanks__message {
+    margin: 0;
+    font-family: "Optima", serif;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: #ffffff;
+}
+
+@media (max-width: 900px) {
+    body.thanks .results__margin-text {
+        font-size: clamp(2.2rem, 14vw, 3.6rem);
+    }
+
+    .thanks__message { font-size: 1.15rem; }
+
+    .quiz__scale { gap: 0.25rem; }
+
+    .quiz__scale-btn { font-size: 0.95rem; }
+
+    .quiz__input { margin-left: 2.5rem; }
+}
+
+/* Pregunta con lista larga: algo más de aire vertical disponible */
+@media (min-width: 901px) {
+    body.quiz--q5 .quiz__panel--question {
+        padding-top: 6.5rem;
+    }
+
+    .quiz__options--compact {
+        gap: 0.7rem;
+    }
+}
+
+/* Portada: línea informativa en 3 columnas */
+.landing__note {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+    justify-content: center;
+    gap: 0 2.5rem;
+}
+
+.landing__note p {
+    margin: 0;
+    text-align: center;
+}
+
+.landing__note p + p {
+    padding-left: 2.5rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 600px) {
+    .landing__note {
+        gap: 0 1rem;
+    }
+
+    .landing__note p + p {
+        padding-left: 1rem;
+    }
+
+    .landing__note {
+        font-size: 0.8rem;
+    }
+}
+
+/* Pregunta 4 (lista larga): la pregunta se queda fija y solo se desplaza la lista */
+@media (min-width: 901px) {
+    body.quiz--q5 .quiz__content {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    body.quiz--q5 .quiz__question {
+        margin-bottom: 1.75rem;
+    }
+
+    body.quiz--q5 .quiz__options--compact {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 0.25rem 1rem 0.25rem 0;
+    }
+}
+
+/* Portada: "DE SATISFACCIÓN" es más largo; se ajusta el tamaño para que quepa */
+.landing__text {
+    font-size: clamp(2.5rem, min(9vw, 16vh), 10rem);
+}
+
+@media (max-width: 600px) {
+    .landing__text {
+        font-size: clamp(1.5rem, 8.6vw, 3.6rem);
+    }
+}
+
+/* Barra de scroll naranja y siempre visible (pregunta 4: lista; pregunta 5: texto largo) */
+.quiz__options--compact,
+.quiz__textarea {
+    scrollbar-gutter: stable;
+}
+
+.quiz__options--compact::-webkit-scrollbar,
+.quiz__textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.quiz__options--compact::-webkit-scrollbar-track,
+.quiz__textarea::-webkit-scrollbar-track {
+    background: rgba(255, 107, 0, 0.15);
+    border-radius: 4px;
+}
+
+.quiz__options--compact::-webkit-scrollbar-thumb,
+.quiz__textarea::-webkit-scrollbar-thumb {
+    background: var(--accent, #ff6b00);
+    border-radius: 4px;
+}
+
+/* Firefox (no entiende ::-webkit-scrollbar) */
+@supports not selector(::-webkit-scrollbar) {
+    .quiz__options--compact,
+    .quiz__textarea {
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent, #ff6b00) rgba(255, 107, 0, 0.15);
+    }
+}
+
+/* Portada: las dos frases, una bajo otra y centradas con el logo */
+.landing__note {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.landing__note p + p {
+    padding-left: 0;
+    border-left: none;
+}
+
+/* Campo de texto principal de una pregunta (p. ej. la ciudad) */
+.quiz__input--field {
+    margin: 0;
+    width: 100%;
+    max-width: 30rem;
+    font-size: 1.3rem;
+}
+
+/* Pregunta 6: el campo de texto crece con lo escrito y la línea queda pegada al texto */
+.quiz__textarea {
+    min-height: 0;
+    overflow-y: hidden;
+    padding: 0.25rem 0 0.35rem;
+    line-height: 1.45;
+}

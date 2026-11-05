@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregunta 1 — Cuestionario de satisfacción | Arturo Alba</title>
+    <link rel="icon" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="quiz quiz--q1" data-question="1">
+
+<a href="index.html" class="quiz__restart">
+    <span class="quiz__restart-arrow" aria-hidden="true">←</span>
+    <span>Volver a empezar</span>
+</a>
+
+<main class="quiz__panel quiz__panel--question">
+    <div class="quiz__content">
+        <p class="quiz__kicker">1 / 6</p>
+        <h1 class="quiz__question">¿En qué ciudad se celebra la formación?</h1>
+
+        <label class="sr-only" for="ciudad">Ciudad</label>
+        <input type="text" id="ciudad" class="quiz__input quiz__input--field" maxlength="80" autocomplete="off" placeholder="Escribe la ciudad">
+    </div>
+
+    <a href="pregunta-2.html" class="quiz__next" id="nextBtn" aria-disabled="true">
+        <span>SIGUIENTE</span>
+        <span class="quiz__next-arrow" aria-hidden="true">→</span>
+    </a>
+</main>
+
+<div class="quiz__panel quiz__panel--visual">
+    <img
+            src="assets/images/encuesta-ciudad.png"
+            alt=""
+            class="quiz__visual-image"
+            onerror="this.hidden=true">
+</div>
+
+<script src="js/survey.js"></script>
+</body>
+</html>

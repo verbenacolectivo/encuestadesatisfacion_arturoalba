@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregunta 6 — Cuestionario de satisfacción | Arturo Alba</title>
+    <link rel="icon" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="quiz quiz--q6" data-question="6">
+
+<a href="index.html" class="quiz__restart">
+    <span class="quiz__restart-arrow" aria-hidden="true">←</span>
+    <span>Volver a empezar</span>
+</a>
+
+<main class="quiz__panel quiz__panel--question">
+    <div class="quiz__content">
+        <p class="quiz__kicker">6 / 6</p>
+        <h1 class="quiz__question">¿Qué tema te gustaría que tratáramos en la próxima formación?</h1>
+
+        <label class="sr-only" for="comentario">Tu respuesta</label>
+        <textarea id="comentario" class="quiz__textarea" rows="1" maxlength="500" placeholder="Escribe aquí tu idea (opcional)"></textarea>
+    </div>
+
+    <a href="gracias.html" class="quiz__next is-active" id="nextBtn" data-submit="true">
+        <span>ENVIAR</span>
+        <span class="quiz__next-arrow" aria-hidden="true">→</span>
+    </a>
+</main>
+
+<div class="quiz__panel quiz__panel--visual">
+    <img
+            src="assets/images/encuesta-5-proxima-formacion.png"
+            alt=""
+            class="quiz__visual-image"
+            onerror="this.hidden=true">
+</div>
+
+<script src="js/survey.js"></script>
+</body>
+</html>
