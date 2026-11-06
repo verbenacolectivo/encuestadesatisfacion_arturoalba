@@ -8,7 +8,7 @@
        Si se deja vacío, el cuestionario funciona igual pero las
        respuestas no se envían a ningún sitio.
     ============================================================ */
-    var ENDPOINT = "https://script.google.com/macros/s/AKfycbzkvEHq9Htb0d1igYuVkayjRzHxdz8xZZZPuqu4XiFO5_4ChuIXKSVzr7o2RzGDjVCvDg/exec";
+    var ENDPOINT = "https://script.google.com/macros/s/AKfycbyp_upOdCe6n5SR8_sAm1I_T52RXs-_KwqDn85JRuHs5D4BDA7YVXL_ZxJ6VQanwrPr5w/exec";
 
     function set(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
     function get(k)    { try { return sessionStorage.getItem(k) || ""; } catch (e) { return ""; } }
