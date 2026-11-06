@@ -1315,3 +1315,30 @@ body.results {
     padding: 0.25rem 0 0.35rem;
     line-height: 1.45;
 }
+
+/* Móvil: "DE SATISFACCIÓN" abajo, igual que "CUESTIONARIO" arriba (mismo tamaño y pegado al borde) */
+@media (max-width: 600px) {
+    body.landing {
+        position: relative;
+        overflow: hidden;   /* respaldo para navegadores sin overflow: clip */
+        overflow: clip;     /* recorta lo que sobresale sin impedir el scroll de la página */
+    }
+
+    .landing__text--bottom {
+        position: absolute;
+        grid-row: auto;
+        align-self: auto;
+        bottom: -3vw;
+        padding-bottom: 0;
+        opacity: 0;
+        transform: translateX(-50%);
+        animation: riseIn 1.1s cubic-bezier(.22, 1, .36, 1) 0.1s forwards;
+    }
+}
+
+@media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+    .landing__text--bottom {
+        animation: none;
+        opacity: 1;
+    }
+}
