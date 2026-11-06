@@ -133,7 +133,7 @@
         var payload = {
             sesion: get("sesion"),
             fecha: new Date().toISOString(),
-            ciudad: get("respuesta-1"),
+            ciudad: get("respuesta-1").toLocaleUpperCase("es"),
             valoracion_global: get("respuesta-2"),
             utilidad: get("respuesta-3"),
             claridad: get("respuesta-4"),
